@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "TBImageBrowser.h"
 
 @interface ViewController ()
 
@@ -15,13 +16,28 @@
 @implementation ViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    NSMutableArray *thumbnailUrlArray = [NSMutableArray array];
+    NSMutableArray *imageNameArray = [NSMutableArray array];
+    for (int i = 1; i <= 8; i++) {
+        NSString *urlStr = [NSString stringWithFormat:@"http://myimagestorage.qiniudn.com/%d.pic.jpg",i];
+        NSURL *url = [NSURL URLWithString:urlStr];
+        NSString *imageName = [NSString stringWithFormat:@"%d.pic.jpg",i];
+        [thumbnailUrlArray addObject:url];
+        [imageNameArray addObject:imageName];
+    }
+    
+    TBImageBrowser *browser = [[TBImageBrowser alloc] init];
+    browser.thumbnailURLArray = thumbnailUrlArray;
+    browser.highQualityImageURLArray = thumbnailUrlArray;
+    browser.imageNameArray = imageNameArray;
+    browser.currentIndex = 0;
+    [self.navigationController pushViewController:browser animated:NO];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end
